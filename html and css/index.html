@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Go Out With Me?</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Dark/Light Mode Toggle -->
+    <div class="mode-toggle">
+        <span>🌙</span>
+        <span>☀️</span>
+    </div>
+
+    <!-- Side Menu -->
+    <div class="side-menu">
+        <h2>Things I Love About You</h2>
+        <ul>
+            <li>Your smile 😊</li>
+            <li>Your kindness ❤️</li>
+            <li>Your sense of humor 😂</li>
+            <li>Your intelligence 🧠</li>
+            <li>Your passion 🔥</li>
+            <li>Your eyes 👀</li>
+            <li>Your laugh 😆</li>
+            <li>Your warmth 🌞</li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>Will You Go Out With Me?</h1>
+        <div class="buttons">
+            <button class="button yes">Yes</button>
+            <button class="button no">No</button>
+        </div>
+        <div class="hearts">
+            <span style="left: 10%;">❤️</span>
+            <span style="left: 30%;">❤️</span>
+            <span style="left: 50%;">❤️</span>
+            <span style="left: 70%;">❤️</span>
+            <span style="left: 90%;">❤️</span>
+        </div>
+        <div class="flowers">
+            <span style="left: 20%;">🌸</span>
+            <span style="left: 40%;">🌸</span>
+            <span style="left: 60%;">🌸</span>
+            <span style="left: 80%;">🌸</span>
+        </div>
+        <div class="notes">
+            <div class="note">I love you ❤️</div>
+            <div class="note">I can't wait for you to come back home 🏡</div>
+            <div class="note">You mean the world to me 🌍</div>
+            <div class="note">Every moment with you is special 💖</div>
+            <div class="note">You're my everything 🌟</div>
+            <div class="note">I miss you already 💌</div>
+            <div class="note">You make my heart skip a beat 💓</div>
+            <div class="note">Forever yours 💍</div>
+        </div>
+    </div>
+
+    <!-- Big Heart Overlay -->
+    <div class="heart-overlay hidden">
+        ❤️
+    </div>
+
+    <script>
+        // JavaScript to handle button interactions
+        const noButton = document.querySelector('.button.no');
+        const yesButton = document.querySelector('.button.yes');
+        const heartOverlay = document.querySelector('.heart-overlay');
+        const modeToggle = document.querySelector('.mode-toggle');
+        const body = document.body;
+        const notes = document.querySelectorAll('.note');
+
+        let yesScale = 1; // Track the scale of the "Yes" button
+        const noMessages = [
+            "No",
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Please? 🥺",
+            "I'll be sad 😢",
+            "Don't do this to me 💔",
+            "Last chance!",
+            "Okay, fine 😭",
+            "Just kidding, click Yes! 😘",
+            "You're breaking my heart 💔",
+            "I'll wait forever ⏳",
+            "You're my only one 💖",
+            "I can't live without you 💘",
+            "Say yes, please? 🙏"
+        ];
+        let noClickCount = 0;
+
+        // Change the "No" button text and grow the "Yes" button when "No" is clicked
+        noButton.addEventListener('click', () => {
+            noClickCount = (noClickCount + 1) % noMessages.length;
+            noButton.textContent = noMessages[noClickCount];
+
+            // Increase the size of the "Yes" button faster
+            yesScale += 0.5; // Increased growth rate
+            yesButton.style.transition = 'transform 0.5s ease'; // Smooth transition
+            yesButton.style.transform = `scale(${yesScale})`;
+
+            // If "Yes" button reaches a certain size, cover the screen
+            if (yesScale >= 10) {
+                yesButton.style.position = 'fixed';
+                yesButton.style.top = '0';
+                yesButton.style.left = '0';
+                yesButton.style.width = '100%';
+                yesButton.style.height = '100%';
+                yesButton.style.borderRadius = '0';
+                yesButton.style.transform = 'scale(1)';
+                yesButton.style.zIndex = '1000';
+                yesButton.textContent = '❤️'; // Turn into a big heart
+                yesButton.style.fontSize = '10em'; // Make the heart bigger
+            }
+        });
+
+        // Show the big heart when "Yes" is clicked
+        yesButton.addEventListener('click', () => {
+            heartOverlay.classList.remove('hidden');
+        });
+
+        // Dark/Light Mode Toggle
+        modeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+        });
+
+        // Randomly spread notes across the screen and ensure they stay within bounds
+        notes.forEach(note => {
+            const maxX = window.innerWidth - note.offsetWidth;
+            const maxY = window.innerHeight - note.offsetHeight;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            note.style.left = `${randomX}px`;
+            note.style.top = `${randomY}px`;
+        });
+
+        // Dynamic Background Change
+        
+        function changeBackground() {
+            currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+            body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`;
+        }
+
+        setInterval(changeBackground, 10000); // Change background every 10 seconds
+    </script>
+</body>
+</html>
